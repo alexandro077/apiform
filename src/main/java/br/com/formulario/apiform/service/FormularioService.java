@@ -5,32 +5,16 @@ import br.com.formulario.apiform.repository.FormularioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Service
 public class FormularioService {
     @Autowired
     private FormularioRepository formularioRepository;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    public Formulario salvarFormulario(Formulario formulario) {
+        return formularioRepository.save(formulario);
 
-    public Formulario salvar(Formulario formulario){
-        Formulario formularioSalvo = formularioRepository.save(formulario);
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("");
-        message.setTo("");
-        message.setSubject("");
-        message.setText("Novo contato:\n" +
-        "Nome: " + formularioSalvo.getNome() + "\n" +
-                "Email: " + formularioSalvo.getEmail() + "\n" +
-                "Telefone: " + formularioSalvo.getTelefone() + "\n" +
-                "Mensagem: " + formularioSalvo.getMensagem());
-        mailSender.send(message);
-        return formularioSalvo;
-    }
-
-    public Optional<Formulario> buscarPorId(Long id) {
-        return null;
     }
 }
